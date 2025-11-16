@@ -1,2 +1,17 @@
 /venv
 /bin
+
+build/
+*.DS_Store
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/
+*.xcuserdatad/
+
+.swiftpm/
+.build/
+
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
