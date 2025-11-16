@@ -3,36 +3,35 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
+    @State private var isControlVisible = true
 
     var body: some View {
         
-        VStack{
+        VStack {
             Image(systemName: "heart.circle.fill")
-            Text("lessgo")
+                .foregroundStyle(.red)
+                .font(.system(size: 50))
+            Text("LightAr")
+                .font(.system(size: 30))
         }
-        
-        RealityView { content in
-
-            // Create a cube model
-            let model = Entity()
-            let mesh = MeshResource.generateBox(size: 0.1, cornerRadius: 0.005)
-            let material = SimpleMaterial(color: .gray, roughness: 0.15, isMetallic: true)
-            model.components.set(ModelComponent(mesh: mesh, materials: [material]))
-            model.position = [0, 0.05, 0]
-
-            // Create horizontal plane anchor for the content
-            let anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
-            anchor.addChild(model)
-
-            // Add the horizontal plane anchor to the scene
-            content.add(anchor)
-
-            content.camera = .spatialTracking
-
+        ZStack {
+            ARViewContainer()
+            
+            ControlView(isControlsVisible: $isControlVisible)
         }
         .edgesIgnoringSafeArea(.all)
+        
     }
 
+}
+
+struct ARViewContainer: UIViewRepresentable {
+    func makeUIView(context: Context) -> ARView {
+        let arView = ARView(frame: .zero)
+        
+        return arView
+    }
+    func updateUIView(_ uiView: ARView, context: Context) {}
 }
 
 #Preview {
