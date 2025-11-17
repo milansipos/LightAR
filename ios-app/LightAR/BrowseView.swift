@@ -60,7 +60,7 @@ struct HorizontalGrid : View {
                         
                         let model = items[index]
                         ModelButton(model: model) {
-                            // TODO call method to async load modelEntity
+                            model.asyncLoadModelEntity()
                             //select model or placement
                             showBrowse.toggle()
                         }

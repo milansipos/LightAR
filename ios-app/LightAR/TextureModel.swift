@@ -35,13 +35,29 @@ class TextureModel {
     var modelEntity: ModelEntity?
     var scaleCompensation: Float
     
+    private var cancellable: AnyCancellable?
+    
     init(name: String, category: ModelCategory, scaleCompensation: Float = 1.0) {
         self.name = name
         self.category = category
         self.thumbnail = UIImage(named: name) ?? UIImage(systemName: "photo")!
         self.scaleCompensation = scaleCompensation
     }
-    
+    func asyncLoadModelEntity() {
+        let filename = "\(name).usdz"
+        self.cancellable = ModelEntity.loadModelAsync(named: filename)
+            .sink(receiveCompletion: { loadCompletion in
+                switch loadCompletion {
+                case .failure(let error): print("Unable to load modelEntity. Filename \(filename) with error: \(error)")
+                case .finished:
+                    break
+                }}, receiveValue: {modelEntity in
+                    self.modelEntity = modelEntity
+                    self.modelEntity?.scale += self.scaleCompensation
+                    
+                    print("\(self.name) modelentity loaded!")
+                })
+    }
     //TODO: load async modelentity
 }
 
