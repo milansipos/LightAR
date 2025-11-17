@@ -3,7 +3,7 @@ import SwiftUI
 import RealityKit
 import Combine
 
-class PlacementSettings {
+class PlacementSettings : ObservableObject {
     
     // if user selects model in BrowseView, this property is set
     @Published var selectedModel: TextureModel? {

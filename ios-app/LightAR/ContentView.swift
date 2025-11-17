@@ -3,6 +3,7 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
+    @EnvironmentObject var placementSettings: PlacementSettings
     @State private var isControlVisible = true
     @State private var showBrowse = false
 
@@ -15,10 +16,15 @@ struct ContentView : View {
             Text("LightAr")
                 .font(.system(size: 30))
         }
-        ZStack {
+        ZStack(alignment: .bottom) {
             ARViewContainer()
             
-            ControlView(isControlsVisible: $isControlVisible, showBrowse: $showBrowse)
+            if self.placementSettings.selectedModel == nil {
+                ControlView(isControlsVisible: $isControlVisible, showBrowse: $showBrowse)
+            } else {
+                PlacementView()
+            }
+            
         }
         .edgesIgnoringSafeArea(.all)
         
@@ -37,4 +43,5 @@ struct ARViewContainer: UIViewRepresentable {
 
 #Preview {
     ContentView()
+        .environmentObject(PlacementSettings())
 }

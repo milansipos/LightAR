@@ -39,6 +39,7 @@ struct ModelsByCategoryGrid: View {
 
 struct HorizontalGrid : View {
     
+    @EnvironmentObject var placementSettings: PlacementSettings
     
     private let gridItemLayout = [GridItem(.fixed(150))]
     var title: String
@@ -61,7 +62,8 @@ struct HorizontalGrid : View {
                         let model = items[index]
                         ModelButton(model: model) {
                             model.asyncLoadModelEntity()
-                            //select model or placement
+                            
+                            self.placementSettings.selectedModel = model
                             showBrowse.toggle()
                         }
                     }
