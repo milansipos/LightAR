@@ -21,4 +21,8 @@ class PlacementSettings : ObservableObject {
             print("Setting confirmedModel to \(model.name)")
         }
     }
+    
+    // cancellable object for SceneEvents.update Subscriber
+    var sceneObserver : Cancellable?
+    
 }
