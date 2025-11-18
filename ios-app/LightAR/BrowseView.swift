@@ -8,6 +8,9 @@ struct BrowseView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators:false) {
+                
+                RecentsGrid(showBrowse: $showBrowse)
+                
                 ModelsByCategoryGrid(showBrowse: $showBrowse)
             }
             .navigationTitle(Text("Browse"))
@@ -16,6 +19,31 @@ struct BrowseView: View {
             })
         }
     }
+}
+
+struct RecentsGrid: View {
+    @EnvironmentObject var placementSettings: PlacementSettings
+    @Binding var showBrowse: Bool
+    
+    var body: some View {
+        if !self.placementSettings.recentlyPlaced.isEmpty {
+            HorizontalGrid(title: "Recents", items: getRecentsUniqueOrdered(), showBrowse: $showBrowse)
+        }
+    }
+    
+    func getRecentsUniqueOrdered() -> [TextureModel] {
+        var recentsUniqueOrderedArray: [TextureModel] = []
+        var modelNameSet: Set<String> = []
+        
+        for model in self.placementSettings.recentlyPlaced.reversed() {
+            if !modelNameSet.contains(model.name) {
+                recentsUniqueOrderedArray.append(model)
+                modelNameSet.insert(model.name)
+            }
+        }
+        return recentsUniqueOrderedArray
+    }
+    
 }
 
 struct ModelsByCategoryGrid: View {
@@ -35,6 +63,8 @@ struct ModelsByCategoryGrid: View {
             }
         }
     }
+    
+    
 }
 
 struct HorizontalGrid : View {

@@ -19,8 +19,12 @@ class PlacementSettings : ObservableObject {
                 return
             }
             print("Setting confirmedModel to \(model.name)")
+            self.recentlyPlaced.append(model)
         }
     }
+    
+    // record of most recently placed models bigger index more recent
+    @Published var recentlyPlaced: [TextureModel] = []
     
     // cancellable object for SceneEvents.update Subscriber
     var sceneObserver : Cancellable?

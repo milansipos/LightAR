@@ -4,8 +4,10 @@ import RealityKit
 
 struct ContentView : View {
     @EnvironmentObject var placementSettings: PlacementSettings
+    @EnvironmentObject var sessionSettings: SessionSettings
     @State private var isControlVisible = true
     @State private var showBrowse = false
+    @State private var showSettings = false
 
     var body: some View {
         
@@ -20,7 +22,7 @@ struct ContentView : View {
             ARViewContainer()
             
             if self.placementSettings.selectedModel == nil {
-                ControlView(isControlsVisible: $isControlVisible, showBrowse: $showBrowse)
+                ControlView(isControlsVisible: $isControlVisible, showBrowse: $showBrowse, showSettings: $showSettings)
             } else {
                 PlacementView()
             }
@@ -34,9 +36,11 @@ struct ContentView : View {
 
 struct ARViewContainer: UIViewRepresentable {
     @EnvironmentObject var placementSettings: PlacementSettings
+    @EnvironmentObject var sessionSettings: SessionSettings
+
     
     func makeUIView(context: Context) -> CustomARView {
-        let arView = CustomARView(frame: .zero)
+        let arView = CustomARView(frame: .zero, sessionSettings: sessionSettings)
         
         self.placementSettings.sceneObserver = arView.scene.subscribe(to: SceneEvents.Update.self) { (event) in
         
@@ -81,4 +85,5 @@ struct ARViewContainer: UIViewRepresentable {
 #Preview {
     ContentView()
         .environmentObject(PlacementSettings())
+        .environmentObject(SessionSettings())
 }
