@@ -21,7 +21,7 @@ enum Setting {
     var systemIconName: String {
         get {
             switch self {
-            case .peopleOcclusion: return "Person"
+            case .peopleOcclusion: return "person"
             case .objectOcclusion: return "cube.box.fill"
             case .lidarDebug: return "light.min"
             case .multiUser: return "person.2"
@@ -85,7 +85,7 @@ struct SettingToggleButton: View {
                     .buttonStyle(PlainButtonStyle())
                 Text(setting.label)
                     .font(.system(size: 17, weight: .medium, design: .default))
-                    .foregroundStyle(isOn ? .gray : .secondary)
+                    .foregroundStyle(isOn ? .green : .secondary)
                     .padding(.top, 5)
             }
         }

@@ -63,15 +63,15 @@ class CustomARView : ARView {
             self?.updatePeopleOcclusion(isEnabled: isEnabled)
         }
         
-        self.objectOcclusionCancellable =  sessionSettings.$isPeopleOcclusionEnabled.sink { [weak self] isEnabled in
+        self.objectOcclusionCancellable =  sessionSettings.$isObjectOcclusionEnabled.sink { [weak self] isEnabled in
             self?.updateObjectOcclusion(isEnabled: isEnabled)
         }
         
-        self.lidarDebugCancellable =  sessionSettings.$isPeopleOcclusionEnabled.sink { [weak self] isEnabled in
+        self.lidarDebugCancellable =  sessionSettings.$isLidarEnabled.sink { [weak self] isEnabled in
             self?.updateLidarDebug(isEnabled: isEnabled)
         }
         
-        self.multiuserCancellable =  sessionSettings.$isPeopleOcclusionEnabled.sink { [weak self] isEnabled in
+        self.multiuserCancellable =  sessionSettings.$isMultiUserEnabled.sink { [weak self] isEnabled in
             self?.updateMultiuser(isEnabled: isEnabled)
         }
     }
